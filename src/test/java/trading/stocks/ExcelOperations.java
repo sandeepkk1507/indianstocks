@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -169,20 +170,20 @@ public class ExcelOperations {
 		Cell cell;
 		DataFormatter formatter;
 		for (int rowIndex = 1; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) {
-			  row = sheet.getRow(rowIndex);
-			  for (int colIndex = 1; colIndex <= 3; colIndex++) {
-				  cell = row.getCell(colIndex);
-				  formatter = new DataFormatter();
-				  value = formatter.formatCellValue(sheet.getRow(rowIndex).getCell(colIndex));
-				  if (Double.parseDouble(value) >= 0.0) {
-						cell.setCellStyle(styleGreen);
-					} else if (Double.parseDouble(value) < 0.0) {
-						cell.setCellStyle(styleRed);
-					} else {
+			row = sheet.getRow(rowIndex);
+			for (int colIndex = 1; colIndex <= 3; colIndex++) {
+				cell = row.getCell(colIndex);
+				formatter = new DataFormatter();
+				value = formatter.formatCellValue(sheet.getRow(rowIndex).getCell(colIndex));
+				if (Double.parseDouble(value) >= 0.0) {
+					cell.setCellStyle(styleGreen);
+				} else if (Double.parseDouble(value) < 0.0) {
+					cell.setCellStyle(styleRed);
+				} else {
 
-					}
-			  }
+				}
 			}
+		}
 //		while (rowIterator.hasNext()) {
 //			Row row = rowIterator.next();
 //			// For each row, iterate through all the columns
@@ -211,6 +212,90 @@ public class ExcelOperations {
 ////					}
 //			}
 //		}
+		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		workbook.write(out);
+		out.close();
+		workbook.close();
+		file.close();
+	}
+
+	public static void addAllStockData2(String sheetName, TreeMap<String, String> mapData, String stockDate)
+			throws IOException, NumberFormatException {
+		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet(sheetName);
+		int rownum = sheet.getPhysicalNumberOfRows();
+		if (rownum < 5) {
+			Set<String> keyset = mapData.keySet();
+//	        int rownum = 0;
+			for (String key : keyset) {
+				Row row = sheet.createRow(rownum++);
+				String value = mapData.get(key);
+				int cellnum = 0;
+				Cell cell = row.createCell(cellnum++);
+				cell.setCellValue(key);
+				cell = row.createCell(cellnum++);
+				cell.setCellValue(value);
+			}
+		} else {
+			CellStyle style;
+			DataFormat format = workbook.createDataFormat();
+			style = workbook.createCellStyle();
+			style.setDataFormat(format.getFormat("0.00"));
+			CellStyle styleRed = workbook.createCellStyle();
+			styleRed.setFillForegroundColor(IndexedColors.RED.getIndex());
+			styleRed.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			CellStyle styleGreen = workbook.createCellStyle();
+			styleGreen.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+			styleGreen.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			Row row = sheet.getRow(0);
+			String cellValueMaybeNull;
+			List<String> companiesInExcel;
+			String gainlossToAdd;
+			Cell cell = row.createCell(row.getLastCellNum());
+			cell.setCellValue(stockDate);
+			for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+				row = sheet.getRow(rowIndex);
+				if (row != null) {
+					cell = row.getCell(0);
+					if (cell != null) {
+						// Found column and there is value in the cell.
+						cellValueMaybeNull = cell.getStringCellValue();
+						// Do something with the cellValueMaybeNull here ...
+						// break; ???
+						gainlossToAdd = mapData.get(cellValueMaybeNull);
+						if(gainlossToAdd == null) {
+							continue;
+						}
+						cell = row.createCell(row.getLastCellNum());
+						cell.setCellValue(gainlossToAdd);
+						if (Double.parseDouble(gainlossToAdd) >= 0.0) {
+							cell.setCellStyle(styleGreen);
+						} else {
+							cell.setCellStyle(styleRed);
+						}
+
+					}
+				}
+			}
+//
+//			Set<String> keyset = mapData.keySet();
+//			Iterator<Row> iterator = sheet.iterator();
+//			Row currentRow = iterator.next();
+//			Cell cell = currentRow.createCell(currentRow.getLastCellNum());
+//			cell.setCellValue(stockDate);
+//			for (String key : keyset) {
+//				currentRow = iterator.next();
+//				String value = mapData.get(key);
+//				cell = currentRow.createCell(currentRow.getLastCellNum());
+//				cell.setCellValue(value);
+//				if (Double.parseDouble(value) >= 0.0) {
+//					cell.setCellStyle(styleGreen);
+//				} else {
+//					cell.setCellStyle(styleRed);
+//				}
+//			}
+		}
 		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();

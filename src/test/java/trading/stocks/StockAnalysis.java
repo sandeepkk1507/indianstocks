@@ -87,7 +87,7 @@ public class StockAnalysis {
 		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
 
 		getAllStockProgress(nifty500_url, NIFTY500);
-		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
+//		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
 		getAllStockProgress(smallcap250_url, NIFTYSMALLCAP250);
 		
 //		getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
@@ -104,7 +104,7 @@ public class StockAnalysis {
 	}
 
 	public static void initialize() {
-		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_94/chromedriver.exe");
 		// for ghost testing
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless", "--window-size=1920,1200");
@@ -174,7 +174,7 @@ public class StockAnalysis {
 		TreeMap<String, String> tm = new TreeMap<String, String>(mapData);
 		driver.findElement(By.xpath(xpath_liveMarket)).click();
 		stockDate = driver.findElement(By.xpath(xpath_date)).getText();
-		ExcelOperations.addAllStockData(sheetName, tm, strDate);
+		ExcelOperations.addAllStockData2(sheetName, tm, strDate);
 	}
 
 	public static void updateCellColor(String sheetName) throws IOException {
