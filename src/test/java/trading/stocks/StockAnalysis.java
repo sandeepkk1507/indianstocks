@@ -1,5 +1,6 @@
 package trading.stocks;
 
+import java.awt.AWTException;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 
+import mobile.ChromeMobileEmulator;
+
 public class StockAnalysis {
 	public static String moneycontrol_url = "https://www.moneycontrol.com/stocks/marketstats/nsegainer/index.php";
 	public static String nse_url = "https://www.nseindia.com/market-data/live-equity-market";
@@ -29,8 +32,10 @@ public class StockAnalysis {
 	public static String xpath_stock_toggle = "//a[@class=\"toggleIcon\"][@id=\"equityStockTablecol0\"]";
 	public static String xpath_stockDate = "//span[@class=' FL ML15 opn13no_gray MT20']";
 	public static String xpath_nse_dropdown = "//select[@id=\"equitieStockSelect\"]";
-	public static String xpath_nse_table = "//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[1]/tr/th";
-	public static String xpath_nse_table_row = "//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[2]/tr";
+	public static String xpath_nse_table = "//*[@id=\"indicesTable\"]/thead/tr/th";
+//	public static String xpath_nse_table = "//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[1]/tr/th";
+//	public static String xpath_nse_table_row = "//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[2]/tr";
+	public static String xpath_nse_table_row = "//*[@id=\"indicesTable\"]/tbody/tr";
 	public static String nifty500_url = "https://www.moneycontrol.com/markets/indian-indices/top-nse-500-companies-list/7?classic=true";
 	public static String midcap150_url = "https://www.moneycontrol.com/markets/indian-indices/top-nsemidcap-150-companies-list/111?classic=true";
 	public static String smallcap250_url = "https://www.moneycontrol.com/markets/indian-indices/top-nsesmallcap-250-companies-list/114?classic=true";
@@ -71,10 +76,9 @@ public class StockAnalysis {
 //		excelOperations = new ExcelOperations();
 //	}
 
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] args) throws IOException, InterruptedException, AWTException {
 		initialize();
-//		getNiftyTopGainerData();
-//		getTopFiveStockData("gain", "midcap100");
+
 		date = new Date();
 		formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		strDate = formatter.format(date);
@@ -87,15 +91,17 @@ public class StockAnalysis {
 		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
 
 		getAllStockProgress(nifty500_url, NIFTY500);
-//		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
+		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
 		getAllStockProgress(smallcap250_url, NIFTYSMALLCAP250);
-		
-//		getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
-//		getTopFiveStockDataToAddInImage(niftyloss_url, NIFTYLOSS);
-//		getTopFiveStockDataToAddInImage(midcapgain_url, MIDCAPGAIN);
-//		getTopFiveStockDataToAddInImage(midcaploss_url, MIDCAPLOSS);
-//		getTopFiveStockDataToAddInImage(smallcapgain_url, SMALLCAPGAIN);
-//		getTopFiveStockDataToAddInImage(smallcaploss_url, SMALLCAPLOSS);
+
+		getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
+		getTopFiveStockDataToAddInImage(niftyloss_url, NIFTYLOSS);
+		getTopFiveStockDataToAddInImage(midcapgain_url, MIDCAPGAIN);
+		getTopFiveStockDataToAddInImage(midcaploss_url, MIDCAPLOSS);
+		getTopFiveStockDataToAddInImage(smallcapgain_url, SMALLCAPGAIN);
+		getTopFiveStockDataToAddInImage(smallcaploss_url, SMALLCAPLOSS);
+
+		ChromeMobileEmulator.instagramUpload();
 
 //		updateCellColor(NIFTY500);
 //		updateCellColor(NIFTYMIDCAP150);
@@ -153,27 +159,27 @@ public class StockAnalysis {
 		WebElement table = driver.findElement(By.xpath(xpath_nse_table));
 
 		List<WebElement> col = driver.findElements(By.xpath(xpath_nse_table));
-//		System.out.println("Col size "+col.size());
+//		System.out.println("Col size " + col.size());
 
 		List<WebElement> row = driver.findElements(By.xpath(xpath_nse_table_row));
-//		System.out.println("Row size "+row.size());
+//		System.out.println("Row size " + row.size());
 		Map<String, String> mapData = new HashMap<String, String>();
 		for (int i = 1; i <= row.size(); i++) {
-			companyName = driver
-					.findElement(By
-							.xpath("//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[2]/tr[" + i + "]/td[1]/p/a"))
-					.getText();
-			change = driver
-					.findElement(
-							By.xpath("//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[2]/tr[" + i + "]/td[3]"))
-					.getText();
+//			companyName = driver
+//					.findElement(By
+//							.xpath("//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[2]/tr[" + i + "]/td[1]/p/a"))
+//					.getText();
+			companyName = driver.findElement(By.xpath("//*[@id=\"indicesTable\"]/tbody/tr[" + i + "]/td/a")).getText();
+//			change = driver
+//					.findElement(
+//							By.xpath("//*[@id=\"indices_stocks\"]/div[2]/div/div/table/tbody[2]/tr[" + i + "]/td[3]"))
+//					.getText();
+			change = driver.findElement(By.xpath("//*[@id=\"indicesTable\"]/tbody/tr[" + i + "]/td[3]")).getText();
 			mapData.put(companyName, change);
 //			System.out.print("Company name is "+companyName+"----");
 //			System.out.println("Change is "+change);
 		}
 		TreeMap<String, String> tm = new TreeMap<String, String>(mapData);
-		driver.findElement(By.xpath(xpath_liveMarket)).click();
-		stockDate = driver.findElement(By.xpath(xpath_date)).getText();
 		ExcelOperations.addAllStockData2(sheetName, tm, strDate);
 	}
 
@@ -199,10 +205,9 @@ public class StockAnalysis {
 
 			String[] companyName = row.get(i).getText().split("\n");
 			String[] stockData = companyName[1].split(" ");
-			mapData.put( companyName[0],  stockData[5]);
+			mapData.put(companyName[0], stockData[5]);
 		}
 		AddTextToImage.putDataToImage(mapData, type);
 	}
-	
 
 }
