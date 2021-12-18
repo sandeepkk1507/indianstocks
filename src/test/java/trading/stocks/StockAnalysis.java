@@ -110,7 +110,7 @@ public class StockAnalysis {
 	}
 
 	public static void initialize() {
-		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_94/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
 		// for ghost testing
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--headless", "--window-size=1920,1200");
