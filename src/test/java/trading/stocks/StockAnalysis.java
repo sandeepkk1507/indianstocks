@@ -1,13 +1,13 @@
 package trading.stocks;
 
 import java.awt.AWTException;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +16,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.Select;
 
 import mobile.ChromeMobileEmulator;
 
@@ -70,6 +69,26 @@ public class StockAnalysis {
 	public static int count;
 	private static SimpleDateFormat formatter;
 	private static String strDate;
+	public static Map<String, String> topFiveNiftyGainMapData = new HashMap<String, String>();
+	public static Map<String, String> topFiveNiftyLossMapData = new HashMap<String, String>();
+	public static Map<String, String> topFiveMidcapGainMapData = new HashMap<String, String>();
+	public static Map<String, String> topFiveMidcapLossMapData = new HashMap<String, String>();
+	public static Map<String, String> topFiveSmallcapGainMapData = new HashMap<String, String>();
+	public static Map<String, String> topFiveSmallcapLossMapData = new HashMap<String, String>();
+
+	public static String niftyGainImagePath = "C:\\Users\\Dell\\Documents\\Stocks\\instagramnifty100gainpost.exe";
+	public static String niftyLossImagePath = "C:\\Users\\Dell\\Documents\\Stocks\\instagramnifty100losspost.exe";
+	public static String midcapGainImagePath = "C:\\Users\\Dell\\Documents\\Stocks\\instagrammidcapgainpost.exe";
+	public static String midcapLossImagePath = "C:\\Users\\Dell\\Documents\\Stocks\\instagrammidcaplosspost.exe";
+	public static String smallcapGainImagePath = "C:\\Users\\Dell\\Documents\\Stocks\\instagramsmallcapgainpost.exe";
+	public static String smallcapLossImagePath = "C:\\Users\\Dell\\Documents\\Stocks\\instagramsmallcaplosspost.exe";
+
+	public static String niftyGainCaption = "Do you own any of these stocks? #nifty #largecap #nifty100 #trading #gain #top5 #money #stocks #stockmarket #nse #profit #financial #financialtrends";
+	public static String niftyLossCaption = "#largecap #nifty #nifty100 #trading #gainloss #top5 #money #stocks #stockmarket #nse #loss #financial #financialtrends";
+	public static String midcapGainCaption = "Do you own any of these stocks? #midcap #nifty #trading #gain #top5 #money #stocks #stockmarket #nse #profit #financial #financialtrends";
+	public static String midcapLossCaption = "#midcap #nifty #trading #gainloss #top5 #money #stocks #stockmarket #nse #profit #financial #financialtrends";
+	public static String smallcapGainCaption = "Do you own any of these stocks? #smallcap #nifty #trading #gain #top5 #money #stocks #stockmarket #nse #profit #financial #financialtrends";
+	public static String smallcapLossCaption = "#smallcap #nifty #trading #gainloss #top5 #money #stocks #stockmarket #nationalstockexchange #nse #loss #financial #financialtrends";
 
 //	public StockAnalysis() {
 //		// TODO Auto-generated constructor stub
@@ -78,30 +97,49 @@ public class StockAnalysis {
 
 	public static void main(String[] args) throws IOException, InterruptedException, AWTException {
 		initialize();
-
+//
 		date = new Date();
 		formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		strDate = formatter.format(date);
 
-		getTopTenStockData(niftygain_url, NIFTYGAIN);
-		getTopTenStockData(niftyloss_url, NIFTYLOSS);
-		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
-		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
-		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
-		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
+//		getTopTenStockData(niftygain_url, NIFTYGAIN);
+//		getTopTenStockData(niftyloss_url, NIFTYLOSS);
+//		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
+//		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
+//		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
+//		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
 
 		getAllStockProgress(nifty500_url, NIFTY500);
 		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
 		getAllStockProgress(smallcap250_url, NIFTYSMALLCAP250);
 
-		getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
-		getTopFiveStockDataToAddInImage(niftyloss_url, NIFTYLOSS);
-		getTopFiveStockDataToAddInImage(midcapgain_url, MIDCAPGAIN);
-		getTopFiveStockDataToAddInImage(midcaploss_url, MIDCAPLOSS);
-		getTopFiveStockDataToAddInImage(smallcapgain_url, SMALLCAPGAIN);
-		getTopFiveStockDataToAddInImage(smallcaploss_url, SMALLCAPLOSS);
+//		topFiveNiftyGainMapData = getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
+//		topFiveNiftyLossMapData = getTopFiveStockDataToAddInImage(niftyloss_url, NIFTYLOSS);
+//		topFiveMidcapGainMapData = getTopFiveStockDataToAddInImage(midcapgain_url, MIDCAPGAIN);
+//		topFiveMidcapLossMapData = getTopFiveStockDataToAddInImage(midcaploss_url, MIDCAPLOSS);
+//		topFiveSmallcapGainMapData = getTopFiveStockDataToAddInImage(smallcapgain_url, SMALLCAPGAIN);
+//		topFiveSmallcapLossMapData = getTopFiveStockDataToAddInImage(smallcaploss_url, SMALLCAPLOSS);
+//
+//		niftyGainCaption = updateCaption(topFiveNiftyGainMapData, niftyGainCaption);
+//		niftyLossCaption = updateCaption(topFiveNiftyLossMapData, niftyLossCaption);
+//		midcapGainCaption = updateCaption(topFiveMidcapGainMapData, midcapGainCaption);
+//		midcapLossCaption = updateCaption(topFiveMidcapLossMapData, midcapLossCaption);
+//		smallcapGainCaption = updateCaption(topFiveSmallcapGainMapData, smallcapGainCaption);
+//		smallcapLossCaption = updateCaption(topFiveSmallcapLossMapData, smallcapLossCaption);
+//
+//		ChromeMobileEmulator.initializeTheMobileBrowser();
+//		ChromeMobileEmulator.loginToInstagram();
+//
+//		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(midcapLossImagePath, midcapLossCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(smallcapGainImagePath, smallcapGainCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(smallcapLossImagePath, smallcapLossCaption);
+//
+//		ChromeMobileEmulator.teardown();
 
-		ChromeMobileEmulator.instagramUpload();
+//		ChromeMobileEmulator.instagramUpload();
 
 //		updateCellColor(NIFTY500);
 //		updateCellColor(NIFTYMIDCAP150);
@@ -129,7 +167,7 @@ public class StockAnalysis {
 
 	public static void getTopTenStockData(String uniqueUrl, String type) throws IOException {
 		driver.get(uniqueUrl);
-		List<WebElement> col = driver.findElements(By.xpath(xpath_table));
+//		List<WebElement> col = driver.findElements(By.xpath(xpath_table));
 
 		List<WebElement> row = driver.findElements(By.xpath(xpath_table_row));
 
@@ -156,9 +194,9 @@ public class StockAnalysis {
 		driver.get(url);
 		// //*[@id="equityStockTable"]/tbody/tr[5]/td[1]/a - NSE Name
 		// //*[@id="equityStockTable"]/tbody/tr[10]/td[8] - change
-		WebElement table = driver.findElement(By.xpath(xpath_nse_table));
+//		WebElement table = driver.findElement(By.xpath(xpath_nse_table));
 
-		List<WebElement> col = driver.findElements(By.xpath(xpath_nse_table));
+//		List<WebElement> col = driver.findElements(By.xpath(xpath_nse_table));
 //		System.out.println("Col size " + col.size());
 
 		List<WebElement> row = driver.findElements(By.xpath(xpath_nse_table_row));
@@ -187,9 +225,10 @@ public class StockAnalysis {
 		ExcelOperations.updateCellColorInExcel(sheetName);
 	}
 
-	public static void getTopFiveStockDataToAddInImage(String uniqueUrl, String type) throws IOException {
+	public static Map<String, String> getTopFiveStockDataToAddInImage(String uniqueUrl, String type)
+			throws IOException {
 		driver.get(uniqueUrl);
-		List<WebElement> col = driver.findElements(By.xpath(xpath_table));
+//		List<WebElement> col = driver.findElements(By.xpath(xpath_table));
 
 		List<WebElement> row = driver.findElements(By.xpath(xpath_table_row));
 
@@ -208,6 +247,23 @@ public class StockAnalysis {
 			mapData.put(companyName[0], stockData[5]);
 		}
 		AddTextToImage.putDataToImage(mapData, type);
+
+		return mapData;
+	}
+
+	public static String updateCaption(Map<String, String> mapData, String caption) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(caption);
+		Set<String> keySet = mapData.keySet();
+		keySet.forEach((i) -> {
+			if (i.contains(" ")) {
+				i = i.replace(" ", " #");
+			}
+			builder.append(" #" + i);
+		});
+
+		String concatenatedString = builder.toString();
+		return concatenatedString;
 	}
 
 }

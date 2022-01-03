@@ -22,31 +22,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class NSEDailyVolatility {
 	static WebDriver driver;
-	static String url = "https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_17122021.CSV";
+	static String url = "https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_24122021.CSV";
 	static TreeMap<String, String> nseMapData = new TreeMap<String, String>();
 	static TreeMap<String, String> nseMapDataFromExcel = new TreeMap<String, String>();
 
-	public static void main(String[] args) throws IOException {
-		//https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_18112021.CSV
-		
+	
+	public static void downloadCsvFromNse() {
 		initialize();
-//		csvToXLSX();
-//		nseMapDataFromExcel = getDataFromNSEDailySheet();
-//		printMapData(nseMapDataFromExcel);
-
 	}
 	
 	public static void initialize() {
 		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
-//		// for ghost testing
-//		ChromeOptions options = new ChromeOptions();
-//		options.addArguments("--headless", "--window-size=1920,1200");
-//		driver = new ChromeDriver(options);
-		// for exixting window open
-//		ChromeOptions options = new ChromeOptions();
-//		options.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
-//		driver = new ChromeDriver(options);
-		// normal brower
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);

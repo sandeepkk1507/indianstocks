@@ -11,13 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -96,7 +92,7 @@ static //	= new File("C:\\Users\\Dell\\Pictures\\Automation\\addNewblack.jpg");
 		if(colorToShow.equals(green)) {
 			w.drawString("Top 5 "+ GainOrLossType.split("-")[0]+" Gainers on - "+strDate, centerX, centerY);
 		} else if(colorToShow.equals(red)) {
-			w.drawString("Top 5 "+ GainOrLossType.split("-")[0]+" Lossers on - "+strDate, centerX, centerY);
+			w.drawString("Top 5 "+ GainOrLossType.split("-")[0]+" Losers on - "+strDate, centerX, centerY);
 		}
 		Set<String> keyset = mapData.keySet();
 		w.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 44));
