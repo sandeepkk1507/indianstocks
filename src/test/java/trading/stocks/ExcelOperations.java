@@ -27,7 +27,7 @@ public class ExcelOperations {
 
 	public static void addTopTenStockData(String sheetName, Map<String, Object[]> mapData) throws IOException {
 		// Get the File location
-		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\Documents\\Stocks\\TopGainLoss.xlsx");
+		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -46,7 +46,7 @@ public class ExcelOperations {
 					cell.setCellValue((Integer) obj);
 			}
 		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\Documents\\Stocks\\TopGainLoss.xlsx");
+		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -55,7 +55,7 @@ public class ExcelOperations {
 
 	public static void addAllStockData(String sheetName, TreeMap<String, String> mapData, String stockDate)
 			throws IOException, NumberFormatException {
-		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -101,7 +101,7 @@ public class ExcelOperations {
 				}
 			}
 		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -150,7 +150,7 @@ public class ExcelOperations {
 	}
 
 	public static void updateCellColorInExcel(String sheetName) throws IOException {
-		FileInputStream file = new FileInputStream(new File("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx"));
+		FileInputStream file = new FileInputStream(new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx"));
 
 		// Create Workbook instance holding reference to .xlsx file
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -212,7 +212,7 @@ public class ExcelOperations {
 ////					}
 //			}
 //		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -221,7 +221,7 @@ public class ExcelOperations {
 
 	public static void addAllStockData2(String sheetName, TreeMap<String, String> mapData, String stockDate)
 			throws IOException, NumberFormatException {
-		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -296,7 +296,7 @@ public class ExcelOperations {
 //				}
 //			}
 		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\Documents\\Stocks\\StockProgress.xlsx");
+		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();

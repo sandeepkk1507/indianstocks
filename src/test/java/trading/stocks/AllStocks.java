@@ -22,11 +22,11 @@ public class AllStocks {
 	static WebDriver driver;
 	static String url;
 	public static Map<String, String> mapData = new HashMap<String, String>();
-	public static String masterSheet = "C:\\Users\\Dell\\Documents\\Stocks\\NSEDailyDataTracker.xlsx";
+	public static String masterSheet = "C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\NSEDailyDataTracker.xlsx";
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		strDate = formatter.format(date);
 //		strDate = "30122021";
 		url = "https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_" + strDate + ".CSV";
