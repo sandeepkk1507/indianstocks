@@ -102,42 +102,42 @@ public class StockAnalysis {
 		formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		strDate = formatter.format(date);
 
-//		getTopTenStockData(niftygain_url, NIFTYGAIN);
-//		getTopTenStockData(niftyloss_url, NIFTYLOSS);
-//		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
-//		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
-//		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
-//		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
+		getTopTenStockData(niftygain_url, NIFTYGAIN);
+		getTopTenStockData(niftyloss_url, NIFTYLOSS);
+		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
+		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
+		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
+		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
 
 		getAllStockProgress(nifty500_url, NIFTY500);
 		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
 		getAllStockProgress(smallcap250_url, NIFTYSMALLCAP250);
 
-//		topFiveNiftyGainMapData = getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
-//		topFiveNiftyLossMapData = getTopFiveStockDataToAddInImage(niftyloss_url, NIFTYLOSS);
-//		topFiveMidcapGainMapData = getTopFiveStockDataToAddInImage(midcapgain_url, MIDCAPGAIN);
-//		topFiveMidcapLossMapData = getTopFiveStockDataToAddInImage(midcaploss_url, MIDCAPLOSS);
-//		topFiveSmallcapGainMapData = getTopFiveStockDataToAddInImage(smallcapgain_url, SMALLCAPGAIN);
-//		topFiveSmallcapLossMapData = getTopFiveStockDataToAddInImage(smallcaploss_url, SMALLCAPLOSS);
-//
-//		niftyGainCaption = updateCaption(topFiveNiftyGainMapData, niftyGainCaption);
-//		niftyLossCaption = updateCaption(topFiveNiftyLossMapData, niftyLossCaption);
-//		midcapGainCaption = updateCaption(topFiveMidcapGainMapData, midcapGainCaption);
-//		midcapLossCaption = updateCaption(topFiveMidcapLossMapData, midcapLossCaption);
-//		smallcapGainCaption = updateCaption(topFiveSmallcapGainMapData, smallcapGainCaption);
-//		smallcapLossCaption = updateCaption(topFiveSmallcapLossMapData, smallcapLossCaption);
-//
-//		ChromeMobileEmulator.initializeTheMobileBrowser();
-//		ChromeMobileEmulator.loginToInstagram();
-//
-//		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(midcapLossImagePath, midcapLossCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(smallcapGainImagePath, smallcapGainCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(smallcapLossImagePath, smallcapLossCaption);
-//
-//		ChromeMobileEmulator.teardown();
+		topFiveNiftyGainMapData = getTopFiveStockDataToAddInImage(niftygain_url, NIFTYGAIN);
+		topFiveNiftyLossMapData = getTopFiveStockDataToAddInImage(niftyloss_url, NIFTYLOSS);
+		topFiveMidcapGainMapData = getTopFiveStockDataToAddInImage(midcapgain_url, MIDCAPGAIN);
+		topFiveMidcapLossMapData = getTopFiveStockDataToAddInImage(midcaploss_url, MIDCAPLOSS);
+		topFiveSmallcapGainMapData = getTopFiveStockDataToAddInImage(smallcapgain_url, SMALLCAPGAIN);
+		topFiveSmallcapLossMapData = getTopFiveStockDataToAddInImage(smallcaploss_url, SMALLCAPLOSS);
+
+		niftyGainCaption = updateCaption(topFiveNiftyGainMapData, niftyGainCaption);
+		niftyLossCaption = updateCaption(topFiveNiftyLossMapData, niftyLossCaption);
+		midcapGainCaption = updateCaption(topFiveMidcapGainMapData, midcapGainCaption);
+		midcapLossCaption = updateCaption(topFiveMidcapLossMapData, midcapLossCaption);
+		smallcapGainCaption = updateCaption(topFiveSmallcapGainMapData, smallcapGainCaption);
+		smallcapLossCaption = updateCaption(topFiveSmallcapLossMapData, smallcapLossCaption);
+
+		ChromeMobileEmulator.initializeTheMobileBrowser();
+		ChromeMobileEmulator.loginToInstagram();
+
+		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
+		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
+		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
+		ChromeMobileEmulator.uploadImageToInsta(midcapLossImagePath, midcapLossCaption);
+		ChromeMobileEmulator.uploadImageToInsta(smallcapGainImagePath, smallcapGainCaption);
+		ChromeMobileEmulator.uploadImageToInsta(smallcapLossImagePath, smallcapLossCaption);
+
+		ChromeMobileEmulator.teardown();
 
 //		ChromeMobileEmulator.instagramUpload();
 
