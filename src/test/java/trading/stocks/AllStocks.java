@@ -25,10 +25,10 @@ public class AllStocks {
 	public static String masterSheet = "C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\NSEDailyDataTracker.xlsx";
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		strDate = formatter.format(date);
-//		strDate = "30122021";
+//		Date date = new Date();
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//		strDate = formatter.format(date);
+		strDate = "07012022";
 		url = "https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_" + strDate + ".CSV";
 //		csvToXlsConvertor();
 //		HashMap<String, Object[]> comapnyData = getDataFromExcel();
