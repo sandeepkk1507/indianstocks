@@ -5,7 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,8 @@ public class ExcelOperations {
 
 	public static void addTopTenStockData(String sheetName, Map<String, Object[]> mapData) throws IOException {
 		// Get the File location
-		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -46,7 +50,8 @@ public class ExcelOperations {
 					cell.setCellValue((Integer) obj);
 			}
 		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
+		FileOutputStream out = new FileOutputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -55,7 +60,8 @@ public class ExcelOperations {
 
 	public static void addAllStockData(String sheetName, TreeMap<String, String> mapData, String stockDate)
 			throws IOException, NumberFormatException {
-		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -101,7 +107,8 @@ public class ExcelOperations {
 				}
 			}
 		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
+		FileOutputStream out = new FileOutputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -150,7 +157,8 @@ public class ExcelOperations {
 	}
 
 	public static void updateCellColorInExcel(String sheetName) throws IOException {
-		FileInputStream file = new FileInputStream(new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx"));
+		FileInputStream file = new FileInputStream(
+				new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx"));
 
 		// Create Workbook instance holding reference to .xlsx file
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -212,7 +220,8 @@ public class ExcelOperations {
 ////					}
 //			}
 //		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
+		FileOutputStream out = new FileOutputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -221,7 +230,8 @@ public class ExcelOperations {
 
 	public static void addAllStockData2(String sheetName, TreeMap<String, String> mapData, String stockDate)
 			throws IOException, NumberFormatException {
-		FileInputStream file = new FileInputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -264,7 +274,7 @@ public class ExcelOperations {
 						// Do something with the cellValueMaybeNull here ...
 						// break; ???
 						gainlossToAdd = mapData.get(cellValueMaybeNull);
-						if(gainlossToAdd == null) {
+						if (gainlossToAdd == null) {
 							continue;
 						}
 						cell = row.createCell(row.getLastCellNum());
@@ -296,11 +306,97 @@ public class ExcelOperations {
 //				}
 //			}
 		}
-		FileOutputStream out = new FileOutputStream("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
+		FileOutputStream out = new FileOutputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StockProgress.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
 		file.close();
 	}
 
+	// get all symbols from StocksForTrade sheet
+	public static Set<String> getSymbolsFromSheet() throws IOException {
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+		int rownum = sheet.getPhysicalNumberOfRows();
+		Set<String> symbol = new HashSet<String>();
+		for (int i = 1; i < rownum; i++) {
+			Row row = sheet.getRow(i);
+			if (row.getCell(1) != null) {
+				symbol.add(row.getCell(1).toString());
+			}
+		}
+		System.out.println("Symbols are " + symbol.size());
+		workbook.close();
+		file.close();
+		return symbol;
+	}
+
+	// get matching records from NSEDailyDataTracker
+	public static Map<String, List<String>> getRecordsFromSheet(Set<String> symbolSet) throws IOException {
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\NSEDailyDataTracker.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+		int rownum = sheet.getPhysicalNumberOfRows();
+		Map<String, List<String>> mapData = new HashMap<String, List<String>>();
+		for (int i = 1; i < rownum; i++) {
+//			System.out.println("Row number "+i+" value is "+sheet.getRow(i).getCell(0));
+			Row row = sheet.getRow(i);
+			Iterator<String> it = symbolSet.iterator();
+			for (String s : symbolSet) {
+//				System.out.println("Fro excel "+row.getCell(0)+" value is "+s);
+				if (row.getCell(0).toString().equals(s)) {
+//					System.out.println("Inside if "+s+" excel value "+row.getCell(0));
+					List<String> toAdd = new ArrayList<String>();
+					int totalCell = row.getLastCellNum();
+//					System.out.println("length of cell "+totalCell);
+					for (int j = 1; j < totalCell; j++) {
+//						System.out.println("Inside if");
+						toAdd.add(row.getCell(j).toString());
+//						System.out.println(toAdd.toString());
+					}
+					mapData.put(s, new ArrayList<String>(toAdd));
+					continue;
+				}
+			}
+		}
+		workbook.close();
+		file.close();
+		return mapData;
+	}
+
+	// update the data to StocksForTrade sheet
+	public static void updateDataToExcel(Map<String, List<String>> mapData) throws IOException {
+
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+		int rownum = sheet.getPhysicalNumberOfRows();
+		Set<String> symbol = new HashSet<String>();
+		List<String> singleListData = new ArrayList<String>();
+		for (int i = 1; i < rownum; i++) {
+			Row row = sheet.getRow(i);
+			if (row.getCell(1) != null) {
+				if (mapData.get(row.getCell(1).toString()) != null) {
+					singleListData = mapData.get(row.getCell(1).toString());
+					singleListData.forEach(data -> {
+						Cell cell = row.createCell(row.getLastCellNum());
+						cell.setCellValue(data);
+					});
+				}
+				symbol.add(row.getCell(1).toString());
+			}
+		}
+		FileOutputStream out = new FileOutputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		workbook.write(out);
+		out.close();
+		workbook.close();
+		file.close();
+
+	}
 }

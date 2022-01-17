@@ -102,12 +102,12 @@ public class StockAnalysis {
 		formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		strDate = formatter.format(date);
 
-//		getTopTenStockData(niftygain_url, NIFTYGAIN);
-//		getTopTenStockData(niftyloss_url, NIFTYLOSS);
-//		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
-//		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
-//		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
-//		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
+		getTopTenStockData(niftygain_url, NIFTYGAIN);
+		getTopTenStockData(niftyloss_url, NIFTYLOSS);
+		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
+		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
+		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
+		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
 
 		getAllStockProgress(nifty500_url, NIFTY500);
 		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
