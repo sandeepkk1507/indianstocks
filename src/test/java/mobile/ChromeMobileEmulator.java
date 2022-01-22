@@ -179,6 +179,9 @@ public class ChromeMobileEmulator {
 		if(!driver.findElements(By.xpath("//button[text()='Cancel']")).isEmpty()) {
 			driver.findElement(By.xpath("//button[text()='Cancel']")).click();
 		}
+		if(!driver.findElements(By.xpath("//button[text()='Not Now']")).isEmpty()) {
+			driver.findElement(By.xpath("//button[text()='Not Now']")).click();
+		}
 	}
 	
 	public static void uploadImageToInsta(String imagePath, String caption) throws IOException, InterruptedException {
@@ -192,18 +195,16 @@ public class ChromeMobileEmulator {
 		driver.findElement(By.xpath("//button[text()='Next']")).click();
 		driver.findElement(By.xpath("//textarea[@placeholder='Write a caption…']")).sendKeys(caption);
 		driver.findElement(By.xpath("//img[@alt='Preview of photo to be uploaded']")).click();
-		driver.findElement(By.xpath("//button/span[text()='Add Location']")).click();
-		driver.findElement(By.xpath("//input[@placeholder='Find a location']")).click();
-		driver.findElement(By.xpath("//input[@placeholder='Find a location']")).sendKeys("nse");
-		driver.findElement(By.xpath("//span[text()='National Stock Exchange']//parent::div//parent::button")).click();
+//		driver.findElement(By.xpath("//button/span[text()='Add Location']")).click();
+//		driver.findElement(By.xpath("//input[@placeholder='Find a location']")).click();
+//		driver.findElement(By.xpath("//input[@placeholder='Find a location']")).sendKeys("nse");
+//		driver.findElement(By.xpath("//span[text()='National Stock Exchange']//parent::div//parent::button")).click();
 		driver.findElement(By.xpath("//button[text()='Share']")).click();
 		Thread.sleep(3000);
 		if(!driver.findElements(By.xpath("//button[text()='Not Now']")).isEmpty()) {
 			driver.findElement(By.xpath("//button[text()='Not Now']")).click();
 		}
-		if(!driver.findElements(By.xpath("//button[text()='Not Now']")).isEmpty()) {
-			driver.findElement(By.xpath("//button[text()='Not Now']")).click();
-		}
+
 	}
 	
 	public static void teardown() {

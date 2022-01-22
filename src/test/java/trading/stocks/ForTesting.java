@@ -13,7 +13,8 @@ public class ForTesting extends ExcelOperations {
 	public static void main(String[] args) throws IOException {
 		
 		symbol = getSymbolsFromSheet();
-		mapData = getRecordsFromSheet(symbol);
+//		mapData = getRecordsFromSheet(symbol);
+		mapData = getRecordsFromSheetForDateRange(symbol, "10012022");
 		updateDataToExcel(mapData);
 		
 

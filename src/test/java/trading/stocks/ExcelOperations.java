@@ -368,6 +368,45 @@ public class ExcelOperations {
 		return mapData;
 	}
 
+	// get matching records from NSEDailyDataTracker for date range
+	public static Map<String, List<String>> getRecordsFromSheetForDateRange(Set<String> symbolSet, String startDate) throws IOException {
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\NSEDailyDataTracker.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+		int rownum = sheet.getPhysicalNumberOfRows();
+		Row firstRow = sheet.getRow(0);
+		int startColumnNumber = 0;
+		int totalCell = firstRow.getLastCellNum();
+		for (int k = 1; k < totalCell; k++) {
+			if (firstRow.getCell(k).equals(startDate)) {
+				startColumnNumber = k;
+			}
+		}
+		Map<String, List<String>> mapData = new HashMap<String, List<String>>();
+		for (int i = 1; i < rownum; i++) {
+//			System.out.println("Row number "+i+" value is "+sheet.getRow(i).getCell(0));
+			Row row = sheet.getRow(i);
+			Iterator<String> it = symbolSet.iterator();
+			for (String s : symbolSet) {
+//				System.out.println("Fro excel "+row.getCell(0)+" value is "+s);
+				if (row.getCell(0).toString().equals(s)) {
+//					System.out.println("Inside if "+s+" excel value "+row.getCell(0));
+					List<String> toAdd = new ArrayList<String>();
+					for (int j = startColumnNumber; j < totalCell; j++) {
+						toAdd.add(row.getCell(j).toString());
+					}
+					mapData.put(s, new ArrayList<String>(toAdd));
+					continue;
+				}
+			}
+		}
+		System.out.println("Map size is " + mapData.size());
+		workbook.close();
+		file.close();
+		return mapData;
+	}
+
 	// update the data to StocksForTrade sheet
 	public static void updateDataToExcel(Map<String, List<String>> mapData) throws IOException {
 
@@ -397,6 +436,36 @@ public class ExcelOperations {
 		out.close();
 		workbook.close();
 		file.close();
+	}
+	
+	// update the data to StocksForTrade sheet for datarange
+	public static void updateDataToExcelForDateRange(Map<String, List<String>> mapData, String startDate) throws IOException {
 
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+		int rownum = sheet.getPhysicalNumberOfRows();
+		Set<String> symbol = new HashSet<String>();
+		List<String> singleListData = new ArrayList<String>();
+		for (int i = 1; i < rownum; i++) {
+			Row row = sheet.getRow(i);
+			if (row.getCell(1) != null) {
+				if (mapData.get(row.getCell(1).toString()) != null) {
+					singleListData = mapData.get(row.getCell(1).toString());
+					singleListData.forEach(data -> {
+						Cell cell = row.createCell(row.getLastCellNum());
+						cell.setCellValue(data);
+					});
+				}
+				symbol.add(row.getCell(1).toString());
+			}
+		}
+		FileOutputStream out = new FileOutputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		workbook.write(out);
+		out.close();
+		workbook.close();
+		file.close();
 	}
 }
