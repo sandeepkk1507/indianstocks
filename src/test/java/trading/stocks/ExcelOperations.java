@@ -315,7 +315,7 @@ public class ExcelOperations {
 	}
 
 	// get all symbols from StocksForTrade sheet
-	public static Set<String> getSymbolsFromSheet() throws IOException {
+	public static Set<String> getSymbolsFromSheet(int index) throws IOException {
 		FileInputStream file = new FileInputStream(
 				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -324,8 +324,8 @@ public class ExcelOperations {
 		Set<String> symbol = new HashSet<String>();
 		for (int i = 1; i < rownum; i++) {
 			Row row = sheet.getRow(i);
-			if (row.getCell(1) != null) {
-				symbol.add(row.getCell(1).toString());
+			if (row.getCell(index) != null) {
+				symbol.add(row.getCell(index).toString());
 			}
 		}
 		System.out.println("Symbols are " + symbol.size());
@@ -369,7 +369,8 @@ public class ExcelOperations {
 	}
 
 	// get matching records from NSEDailyDataTracker for date range
-	public static Map<String, List<String>> getRecordsFromSheetForDateRange(Set<String> symbolSet, String startDate) throws IOException {
+	public static Map<String, List<String>> getRecordsFromSheetForDateRange(Set<String> symbolSet, String startDate)
+			throws IOException {
 		FileInputStream file = new FileInputStream(
 				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\NSEDailyDataTracker.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -379,7 +380,8 @@ public class ExcelOperations {
 		int startColumnNumber = 0;
 		int totalCell = firstRow.getLastCellNum();
 		for (int k = 1; k < totalCell; k++) {
-			if (firstRow.getCell(k).equals(startDate)) {
+			if (firstRow.getCell(k).toString().equals(startDate)) {
+				System.out.println("Date matched");
 				startColumnNumber = k;
 			}
 		}
@@ -414,6 +416,7 @@ public class ExcelOperations {
 				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet("Home");
+
 		int rownum = sheet.getPhysicalNumberOfRows();
 		Set<String> symbol = new HashSet<String>();
 		List<String> singleListData = new ArrayList<String>();
@@ -437,28 +440,27 @@ public class ExcelOperations {
 		workbook.close();
 		file.close();
 	}
-	
-	// update the data to StocksForTrade sheet for datarange
-	public static void updateDataToExcelForDateRange(Map<String, List<String>> mapData, String startDate) throws IOException {
 
+	// update the data to numbervalue in StocksForTrade sheet
+	public static void updateCellFormulaNumberValue(Map<String, List<String>> mapData) throws IOException {
+		char[] alphaSet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+				'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+		Integer num = 1;
+		Map<Integer, Character> alphabets = new HashMap<Integer, Character>();
+		for(char c: alphaSet) {
+			alphabets.put(num++, c);
+		}
 		FileInputStream file = new FileInputStream(
 				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
-		XSSFSheet sheet = workbook.getSheet("Home");
+		XSSFSheet sheet = workbook.getSheet("NumberValue");
+
 		int rownum = sheet.getPhysicalNumberOfRows();
-		Set<String> symbol = new HashSet<String>();
-		List<String> singleListData = new ArrayList<String>();
 		for (int i = 1; i < rownum; i++) {
 			Row row = sheet.getRow(i);
-			if (row.getCell(1) != null) {
-				if (mapData.get(row.getCell(1).toString()) != null) {
-					singleListData = mapData.get(row.getCell(1).toString());
-					singleListData.forEach(data -> {
-						Cell cell = row.createCell(row.getLastCellNum());
-						cell.setCellValue(data);
-					});
-				}
-				symbol.add(row.getCell(1).toString());
+			for (int j = 2; j < 100; j++) {
+				Cell cell = row.createCell(row.getLastCellNum());
+				cell.setCellFormula("NUMBERVALUE(Home!C2)");
 			}
 		}
 		FileOutputStream out = new FileOutputStream(
