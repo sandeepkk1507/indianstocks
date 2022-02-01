@@ -130,9 +130,9 @@ public class StockAnalysis {
 		ChromeMobileEmulator.initializeTheMobileBrowser();
 		ChromeMobileEmulator.loginToInstagram();
 
-		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
-		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
-		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
+//		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
 		ChromeMobileEmulator.uploadImageToInsta(midcapLossImagePath, midcapLossCaption);
 		ChromeMobileEmulator.uploadImageToInsta(smallcapGainImagePath, smallcapGainCaption);
 		ChromeMobileEmulator.uploadImageToInsta(smallcapLossImagePath, smallcapLossCaption);
