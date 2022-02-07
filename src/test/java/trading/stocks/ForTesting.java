@@ -41,20 +41,54 @@ public class ForTesting extends ExcelOperations {
 
 		// To get stock companies logo
 		initialize();
-//		getImageFromOnline("3MINDIA");
-		symbol.remove("Future Retail");
-		symbol.remove("IRCTC");
-		symbol.remove("Emami");
-		symbol.remove("Infosys");
-		symbol.remove("Manappuram Fin");
-		symbol.remove("Symphony");
-		symbol.remove("Sobha");//not saved
-		symbol.remove("Aditya Birla F");
-		symbol.remove("Firstsource Sol");//not saved
-		symbol.remove("Bank of India");
-		symbol.remove("HDFC AMC");
+		
+		File folder = new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\companylogos");
+		File[] listOfFiles = folder.listFiles();
+
+		for (int i = 0; i < listOfFiles.length; i++) {
+		  if (listOfFiles[i].isFile()) {
+//		    System.out.println("File " + listOfFiles[i].getName());
+		    symbol.remove(listOfFiles[i].getName().replace(".png", ""));
+		  } else if (listOfFiles[i].isDirectory()) {
+		    System.out.println("Directory " + listOfFiles[i].getName());
+		  }
+		}
+//		System.out.println("All items "+symbol.toString()+" size is "+symbol.size());
+		
+		symbol.remove("TeamLease Ser.");//no
+		symbol.remove("ICICI Bank");
+		symbol.remove("Mahindra CIE");
+		symbol.remove("Zensar Tech");
+		symbol.remove("Tata Elxsi");
+		symbol.remove("Godrej Consumer");
+		symbol.remove("Grindwell Norto");
+		symbol.remove("Sequent Scienti");
+		symbol.remove("Mishra Dhatu Ni");
+		symbol.remove("TATA Cons. Prod");
+		symbol.remove("Dhani Services");
+		symbol.remove("NFL");
+		symbol.remove("Birla Corp");
+		symbol.remove("NLC India");
+		symbol.remove("Central Bank");
+		symbol.remove("Cadila Health");
+		symbol.remove("Phillips Carbon");
+		symbol.remove("Sundram");
+		symbol.remove("Radico Khaitan");
+		symbol.remove("Gujarat Gas");
+		symbol.remove("Heidelberg Cem");
+		symbol.remove("Motilal Oswal");
+		symbol.remove("NTPC");
+		symbol.remove("MRPL");
+//		symbol.remove("NFL");
+//		symbol.remove("NFL");
+//		symbol.remove("NFL");
+//		symbol.remove("NFL");
+//		symbol.remove("NFL");
+//		symbol.remove("NFL");
+//		symbol.remove("NFL");
 		
 		
+		symbol.remove("NFL");
 		for (String s : symbol) {
 			getImageFromOnline(s);
 		}
@@ -73,7 +107,11 @@ public class ForTesting extends ExcelOperations {
 	public static void getImageFromOnline(String companyName) throws MalformedURLException, IOException, InterruptedException {
 		driver.get("https://www.google.com");
 		driver.findElement(By.xpath("//input[@title='Search']")).sendKeys(companyName+" stock");
-		driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click();
+//		if(driver.findElements(By.xpath("(//input[@value='Google Search'])[1]")).size()==1) {
+//			driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click();
+//			
+//		}
+		driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click(); //not needed I guess
 		//driver.findElement(By.xpath("//ul/li[1]/div")).click();// clicking from the dropdown suggestion
 //		driver.findElement(By.xpath("//a[text()='Images']")).click();// to click images tag
 //		if(driver.findElements(By.xpath("//a/g-img/img")).size()==1) {

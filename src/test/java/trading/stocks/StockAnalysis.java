@@ -102,12 +102,13 @@ public class StockAnalysis {
 		formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		strDate = formatter.format(date);
 
-		getTopTenStockData(niftygain_url, NIFTYGAIN);
-		getTopTenStockData(niftyloss_url, NIFTYLOSS);
-		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
-		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
-		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
-		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
+		//Not required as the data is captured in other place
+//		getTopTenStockData(niftygain_url, NIFTYGAIN);
+//		getTopTenStockData(niftyloss_url, NIFTYLOSS);
+//		getTopTenStockData(midcapgain_url, MIDCAPGAIN);
+//		getTopTenStockData(midcaploss_url, MIDCAPLOSS);
+//		getTopTenStockData(smallcapgain_url, SMALLCAPGAIN);
+//		getTopTenStockData(smallcaploss_url, SMALLCAPLOSS);
 
 		getAllStockProgress(nifty500_url, NIFTY500);
 		getAllStockProgress(midcap150_url, NIFTYMIDCAP150);
@@ -130,9 +131,9 @@ public class StockAnalysis {
 		ChromeMobileEmulator.initializeTheMobileBrowser();
 		ChromeMobileEmulator.loginToInstagram();
 
-//		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
-//		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
+		ChromeMobileEmulator.uploadImageToInsta(niftyGainImagePath, niftyGainCaption);
+		ChromeMobileEmulator.uploadImageToInsta(niftyLossImagePath, niftyLossCaption);
+		ChromeMobileEmulator.uploadImageToInsta(midcapGainImagePath, midcapGainCaption);
 		ChromeMobileEmulator.uploadImageToInsta(midcapLossImagePath, midcapLossCaption);
 		ChromeMobileEmulator.uploadImageToInsta(smallcapGainImagePath, smallcapGainCaption);
 		ChromeMobileEmulator.uploadImageToInsta(smallcapLossImagePath, smallcapLossCaption);
