@@ -442,13 +442,16 @@ public class ExcelOperations {
 	}
 
 	// update the data to numbervalue in StocksForTrade sheet
-	public static void updateCellFormulaNumberValue(Map<String, List<String>> mapData) throws IOException {
-		char[] alphaSet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-				'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+	public static void updateCellFormulaNumberValue() throws IOException {
+		String[] alphaSet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+				"S", "T", "U", "V", "W", "X", "Y", "Z" };
 		Integer num = 1;
-		Map<Integer, Character> alphabets = new HashMap<Integer, Character>();
-		for(char c: alphaSet) {
+		Map<Integer, String> alphabets = new HashMap<Integer, String>();
+		for(String c: alphaSet) {
 			alphabets.put(num++, c);
+		}
+		for(int i = 0; i < alphaSet.length; i++) {
+			alphabets.put(num++, "A"+alphaSet[i]);
 		}
 		FileInputStream file = new FileInputStream(
 				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
@@ -458,9 +461,11 @@ public class ExcelOperations {
 		int rownum = sheet.getPhysicalNumberOfRows();
 		for (int i = 1; i < rownum; i++) {
 			Row row = sheet.getRow(i);
-			for (int j = 2; j < 100; j++) {
+			for (int j = 2; j < 50; j++) {
 				Cell cell = row.createCell(row.getLastCellNum());
-				cell.setCellFormula("NUMBERVALUE(Home!C2)");
+				String val = alphabets.get(j+1)+(i+1);
+				System.out.println(val);
+				cell.setCellFormula("'NUMBERVALUE(Home!"+val+")");
 			}
 		}
 		FileOutputStream out = new FileOutputStream(

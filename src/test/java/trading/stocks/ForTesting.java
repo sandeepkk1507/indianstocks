@@ -30,7 +30,63 @@ public class ForTesting extends ExcelOperations {
 	static Map<String, List<String>> mapData = new HashMap<String, List<String>>();
 
 	public static void main(String[] args) throws IOException, AWTException, InterruptedException {
+//		updateDataInNumberValueSheetOfForTrading();
+		addDataToForTrading();
 
+	}
+	
+	public static void updateDataInNumberValueSheetOfForTrading() throws IOException {
+		updateCellFormulaNumberValue();
+	}
+
+	public static void initialize() {
+		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+	}
+	
+	public static void getImageFromOnline(String companyName) throws MalformedURLException, IOException, InterruptedException {
+		driver.get("https://www.google.com");
+		driver.findElement(By.xpath("//input[@title='Search']")).sendKeys(companyName+" stock");
+//		if(driver.findElements(By.xpath("(//input[@value='Google Search'])[1]")).size()==1) {
+//			driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click();
+//			
+//		}
+		driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click(); //not needed I guess
+		//driver.findElement(By.xpath("//ul/li[1]/div")).click();// clicking from the dropdown suggestion
+//		driver.findElement(By.xpath("//a[text()='Images']")).click();// to click images tag
+//		if(driver.findElements(By.xpath("//a/g-img/img")).size()==1) {
+//			driver.findElement(By.xpath("//a/g-img/img")).click(); //to click on the image
+//		} else {
+//			driver.findElement(By.xpath("//span[contains(text(),'"+companyName+"')]/parent::h2/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/a/g-img/img")).click();
+//		}
+//		
+//		////span[contains(text(),'Manappuram Fin')]/parent::h2/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/a/g-img/img
+////		WebElement companyImage = driver.findElement(By.xpath("(//img[contains(@alt,'"+companyName+"')])[1]"));
+////		 ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", companyImage);
+////		driver.findElement(By.xpath("(//img[contains(@alt,'"+companyName+"')])[1]")).click();
+//		String url = driver.findElement(By.xpath("(//span[contains(text(),' × ')])[1]/preceding-sibling::img"))
+//				.getAttribute("src");
+//		System.out.println("URL for "+companyName+" is "+url);
+//		if(!url.contains("data:image")) {
+//			if(url.contains(".svg")) {
+////				BufferedImage bufferedImage = ImageIO.read(new URL(url));
+////				File outputfile = new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\companylogos\\"+companyName+".svg");
+////				ImageIO.write(bufferedImage, "svg", outputfile);
+//			} else {
+//				BufferedImage bufferedImage = ImageIO.read(new URL(url));
+//				File outputfile = new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\companylogos\\"+companyName+".png");
+//				ImageIO.write(bufferedImage, "png", outputfile);
+//				System.out.println("Success");
+//			}
+//			
+//		}
+		Thread.sleep(20000);
+	}
+	
+	static void getImagesFroGoogleSearch() throws MalformedURLException, IOException, InterruptedException {
 		// to add data from NSE to StocksForTrade
 		symbol = getSymbolsFromSheet(0);
 ////		mapData = getRecordsFromSheet(symbol);
@@ -79,10 +135,10 @@ public class ForTesting extends ExcelOperations {
 		symbol.remove("Motilal Oswal");
 		symbol.remove("NTPC");
 		symbol.remove("MRPL");
-//		symbol.remove("NFL");
-//		symbol.remove("NFL");
-//		symbol.remove("NFL");
-//		symbol.remove("NFL");
+		symbol.remove("TCNS Clothing C");
+		symbol.remove("Vakrangee");
+		symbol.remove("Spandana Sphoor");
+		symbol.remove("Indiamart Inter");
 //		symbol.remove("NFL");
 //		symbol.remove("NFL");
 //		symbol.remove("NFL");
@@ -92,56 +148,12 @@ public class ForTesting extends ExcelOperations {
 		for (String s : symbol) {
 			getImageFromOnline(s);
 		}
-		
-
-	}
-
-	public static void initialize() {
-		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	}
 	
-	public static void getImageFromOnline(String companyName) throws MalformedURLException, IOException, InterruptedException {
-		driver.get("https://www.google.com");
-		driver.findElement(By.xpath("//input[@title='Search']")).sendKeys(companyName+" stock");
-//		if(driver.findElements(By.xpath("(//input[@value='Google Search'])[1]")).size()==1) {
-//			driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click();
-//			
-//		}
-		driver.findElement(By.xpath("(//input[@value='Google Search'])[1]")).click(); //not needed I guess
-		//driver.findElement(By.xpath("//ul/li[1]/div")).click();// clicking from the dropdown suggestion
-//		driver.findElement(By.xpath("//a[text()='Images']")).click();// to click images tag
-//		if(driver.findElements(By.xpath("//a/g-img/img")).size()==1) {
-//			driver.findElement(By.xpath("//a/g-img/img")).click(); //to click on the image
-//		} else {
-//			driver.findElement(By.xpath("//span[contains(text(),'"+companyName+"')]/parent::h2/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/a/g-img/img")).click();
-//		}
-//		
-//		////span[contains(text(),'Manappuram Fin')]/parent::h2/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/a/g-img/img
-////		WebElement companyImage = driver.findElement(By.xpath("(//img[contains(@alt,'"+companyName+"')])[1]"));
-////		 ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", companyImage);
-////		driver.findElement(By.xpath("(//img[contains(@alt,'"+companyName+"')])[1]")).click();
-//		String url = driver.findElement(By.xpath("(//span[contains(text(),' × ')])[1]/preceding-sibling::img"))
-//				.getAttribute("src");
-//		System.out.println("URL for "+companyName+" is "+url);
-//		if(!url.contains("data:image")) {
-//			if(url.contains(".svg")) {
-////				BufferedImage bufferedImage = ImageIO.read(new URL(url));
-////				File outputfile = new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\companylogos\\"+companyName+".svg");
-////				ImageIO.write(bufferedImage, "svg", outputfile);
-//			} else {
-//				BufferedImage bufferedImage = ImageIO.read(new URL(url));
-//				File outputfile = new File("C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\companylogos\\"+companyName+".png");
-//				ImageIO.write(bufferedImage, "png", outputfile);
-//				System.out.println("Success");
-//			}
-//			
-//		}
-		Thread.sleep(20000);
-		
+	static void addDataToForTrading() throws IOException {
+		symbol = getSymbolsFromSheet(0);
+		mapData = getRecordsFromSheetForDateRange(symbol, "24012022");
+		updateDataToExcel(mapData);
 	}
 
 }

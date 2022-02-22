@@ -28,7 +28,7 @@ public class AllStocks {
 //		Date date = new Date();
 //		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 //		strDate = formatter.format(date);
-		strDate = "01022022";
+		strDate = "14022022";
 		url = "https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_" + strDate + ".CSV";
 //		csvToXlsConvertor();
 //		HashMap<String, Object[]> comapnyData = getDataFromExcel();
@@ -60,7 +60,7 @@ public class AllStocks {
 	}
 
 	public static void initialize() {
-		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_98/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);

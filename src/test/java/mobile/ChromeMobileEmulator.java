@@ -152,7 +152,7 @@ public class ChromeMobileEmulator {
 	}
 	
 	public static void initializeTheMobileBrowser() {
-		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_98/chromedriver.exe");
 
 		// here creating our first map for deviceName
 		Map<String, String> mobileEmulation = new HashMap<String, String>();
