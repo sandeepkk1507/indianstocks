@@ -28,8 +28,12 @@ public class AllStocks {
 //		Date date = new Date();
 //		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 //		strDate = formatter.format(date);
-		strDate = "14022022";
+		
+		
+		strDate = "01042022";
 		url = "https://archives.nseindia.com/archives/nsccl/volt/CMVOLT_" + strDate + ".CSV";
+		
+		
 //		csvToXlsConvertor();
 //		HashMap<String, Object[]> comapnyData = getDataFromExcel();
 //		addDataToExcel(comapnyData);

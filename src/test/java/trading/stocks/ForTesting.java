@@ -31,7 +31,8 @@ public class ForTesting extends ExcelOperations {
 
 	public static void main(String[] args) throws IOException, AWTException, InterruptedException {
 //		updateDataInNumberValueSheetOfForTrading();
-		addDataToForTrading();
+//		addDataToForTrading();
+		getImagesFroGoogleSearch();
 
 	}
 	
@@ -40,7 +41,7 @@ public class ForTesting extends ExcelOperations {
 	}
 
 	public static void initialize() {
-		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_96/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/Users/Dell/Downloads/chromedriver_win32_98/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
@@ -139,6 +140,11 @@ public class ForTesting extends ExcelOperations {
 		symbol.remove("Vakrangee");
 		symbol.remove("Spandana Sphoor");
 		symbol.remove("Indiamart Inter");
+		symbol.remove("Bharat Rasayan");
+		symbol.remove("CreditAccess Gr");
+		symbol.remove("COFORGE LTD.");
+		symbol.remove("Linde India");
+//		symbol.remove("NFL");
 //		symbol.remove("NFL");
 //		symbol.remove("NFL");
 //		symbol.remove("NFL");
