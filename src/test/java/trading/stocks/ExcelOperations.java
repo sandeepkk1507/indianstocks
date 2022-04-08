@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -20,9 +22,11 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.SystemOutLogger;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -31,7 +35,7 @@ public class ExcelOperations {
 	public static void addTopTenStockData(String sheetName, Map<String, Object[]> mapData) throws IOException {
 		// Get the File location
 		FileInputStream file = new FileInputStream(
-				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\GFGsheet.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 		int rownum = sheet.getPhysicalNumberOfRows();
@@ -48,10 +52,12 @@ public class ExcelOperations {
 					cell.setCellValue((String) obj);
 				else if (obj instanceof Integer)
 					cell.setCellValue((Integer) obj);
+				else if (obj instanceof Double)
+					cell.setCellValue((Double) obj);
 			}
 		}
 		FileOutputStream out = new FileOutputStream(
-				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\TopGainLoss.xlsx");
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\GFGsheet.xlsx");
 		workbook.write(out);
 		out.close();
 		workbook.close();
@@ -391,12 +397,14 @@ public class ExcelOperations {
 			Row row = sheet.getRow(i);
 			Iterator<String> it = symbolSet.iterator();
 			for (String s : symbolSet) {
+				System.out.println("Stock " + s);
 //				System.out.println("Fro excel "+row.getCell(0)+" value is "+s);
 				if (row.getCell(0).toString().equals(s)) {
 //					System.out.println("Inside if "+s+" excel value "+row.getCell(0));
 					List<String> toAdd = new ArrayList<String>();
 					for (int j = startColumnNumber; j < totalCell; j++) {
 						toAdd.add(row.getCell(j).toString());
+						System.out.print(" " + row.getCell(j).toString());
 					}
 					mapData.put(s, new ArrayList<String>(toAdd));
 					continue;
@@ -447,11 +455,11 @@ public class ExcelOperations {
 				"S", "T", "U", "V", "W", "X", "Y", "Z" };
 		Integer num = 1;
 		Map<Integer, String> alphabets = new HashMap<Integer, String>();
-		for(String c: alphaSet) {
+		for (String c : alphaSet) {
 			alphabets.put(num++, c);
 		}
-		for(int i = 0; i < alphaSet.length; i++) {
-			alphabets.put(num++, "A"+alphaSet[i]);
+		for (int i = 0; i < alphaSet.length; i++) {
+			alphabets.put(num++, "A" + alphaSet[i]);
 		}
 		FileInputStream file = new FileInputStream(
 				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
@@ -463,9 +471,9 @@ public class ExcelOperations {
 			Row row = sheet.getRow(i);
 			for (int j = 2; j < 50; j++) {
 				Cell cell = row.createCell(row.getLastCellNum());
-				String val = alphabets.get(j+1)+(i+1);
+				String val = alphabets.get(j + 1) + (i + 1);
 				System.out.println(val);
-				cell.setCellFormula("'NUMBERVALUE(Home!"+val+")");
+				cell.setCellFormula("'NUMBERVALUE(Home!" + val + ")");
 			}
 		}
 		FileOutputStream out = new FileOutputStream(
@@ -474,5 +482,90 @@ public class ExcelOperations {
 		out.close();
 		workbook.close();
 		file.close();
+	}
+
+	static void getTopFiveLosers() throws IOException {
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+
+		int rownum = sheet.getPhysicalNumberOfRows();
+		Map<String, Double> mapOfPercentage = new HashMap<String, Double>();
+		HashMap<String, Double> mapOfLeastFive = new HashMap<String, Double>();
+		ArrayList<Double> list = new ArrayList<>();
+		String selectedDate = sheet.getRow(0).getCell(4).toString();
+		System.out.println("Date is " + selectedDate);
+		for (int i = 1; i < rownum; i++) {
+			Row row = sheet.getRow(i);
+			Cell cellplus = row.getCell(3);
+			Cell cell = row.getCell(2);
+			Cell stockNameCell = row.getCell(0);
+			Double cellPlusDouble = Double.parseDouble(cellplus.toString());
+			Double cellDouble = Double.parseDouble(cell.toString());
+
+			Double value = ((cellPlusDouble / cellDouble) - 1) * 100;
+//			System.out.println("Value is "+cellPlusDouble+" "+cellDouble+" "+value );
+			mapOfPercentage.put(stockNameCell.toString(), value);
+			list.add(value);
+		}
+//		System.out.println("Map is " + mapOfPercentage.toString());
+		Collections.sort(list);
+		for (int i = 0; i < 5; i++) {
+			for (Map.Entry<String, Double> entry : mapOfPercentage.entrySet()) {
+				if (list.get(i).equals(entry.getValue())) {
+					mapOfLeastFive.put(entry.getKey(), list.get(i));
+				}
+			}
+		}
+		ForTesting.getLeastFiveDouble(mapOfLeastFive);
+//		System.out.println("The Map  is "+mapOfLeastFive.toString());
+	}
+
+	static Map<String, Double[]> getGrowth(Map<String, Double> map) throws IOException {
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\Dell\\eclipse-workspace\\stocks\\resources\\StocksForTrade.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("Home");
+		int rownum = sheet.getPhysicalNumberOfRows();
+
+		Map<String, Double[]> mapOfGrowthValues = new HashMap<String, Double[]>();
+
+		for (int i = 0; i < rownum; i++) {
+			Row row = sheet.getRow(i);
+			Cell stockNameCell = row.getCell(0);
+			int counter = 0;
+			Double arrDouble[] = new Double[500];
+			Double value = null;
+			Set<Entry<String, Double>> entrySet = map.entrySet();
+			for (Entry<String, Double> entry : entrySet) {
+				if (stockNameCell.toString().equals(entry.getKey())) {
+					for (int j = 4; j < row.getPhysicalNumberOfCells(); j++) {
+						Cell cellplus = row.getCell(j);
+						Cell cell = row.getCell(j - 1);
+						Double cellPlusDouble = Double.parseDouble(cellplus.toString());
+						Double cellDouble = Double.parseDouble(cell.toString());
+
+						value = ((cellPlusDouble / cellDouble) - 1) * 100;
+						arrDouble[counter++] = value;
+					}
+					mapOfGrowthValues.put(stockNameCell.toString(), arrDouble);
+				}
+			}
+		}
+//		mapOfGrowthValues.forEach((key, value) -> System.out.println(key + ":" + value));
+		
+		
+//		Set<String> keyset = mapOfGrowthValues.keySet();
+//		for (String key : keyset) {
+//			System.out.println("Stock is "+key);
+//			Double[] objArr = mapOfGrowthValues.get(key);
+//			for (Double doub : objArr) {
+//				if(doub != null) {
+//					System.out.println("Value is "+doub);
+//				}
+//			}
+//		}
+		return mapOfGrowthValues;
 	}
 }

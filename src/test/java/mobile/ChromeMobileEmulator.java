@@ -193,7 +193,7 @@ public class ChromeMobileEmulator {
 		Runtime.getRuntime().exec(imagePath);
 		Thread.sleep(5000);
 		driver.findElement(By.xpath("//button[text()='Next']")).click();
-		driver.findElement(By.xpath("//textarea[@placeholder='Write a caption…']")).sendKeys(caption);
+		driver.findElement(By.xpath("//textarea[@aria-label='Write a caption…']")).sendKeys(caption);
 		driver.findElement(By.xpath("//img[@alt='Preview of photo to be uploaded']")).click();
 //		driver.findElement(By.xpath("//button/span[text()='Add Location']")).click();
 //		driver.findElement(By.xpath("//input[@placeholder='Find a location']")).click();
